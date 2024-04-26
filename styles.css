@@ -1,59 +1,70 @@
-/* Google Fonts를 사용한 세련된 폰트 적용 */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
-body {
-    font-family: 'Nunito', sans-serif;
-    background: #f0f2f5;
+body, h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
     color: #333;
 }
 
-/* 기본 색상 스키마 변경 */
 header {
-    background: #0056b3; /* 진한 파란색 */
-    color: white;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* 링크 및 버튼 호버 효과 */
-a, button {
-    transition: color 0.3s ease-in-out;
-}
-
-a:hover, button:hover {
-    color: #ff6347; /* 밝은 적색으로 변경 */
-}
-
-/* 링크와 버튼을 더 돋보이게 함 */
-nav ul li a {
-    padding: 10px 15px;
-    border-radius: 5px;
-    background: transparent;
-    transition: background-color 0.3s ease-in-out;
-}
-
-nav ul li a:hover {
-    background-color: #ffffff; /* 배경을 흰색으로 변경 */
-    color: #0056b3;
-}
-
-section {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: box-shadow 0.3s ease-in-out;
-}
-
-section:hover {
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* 호버 시 섀도우 강조 */
-}
-
-main {
-    padding: 20px;
+.nav-list {
+    list-style: none;
+    padding: 0;
     text-align: center;
 }
 
-main p {
-    font-size: 1.2em;
-    color: #555;
+.nav-list li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.nav-list li:last-child {
+    margin-right: 0;
+}
+
+.nav-list li a {
+    text-decoration: none;
+    color: #333;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: color 0.3s;
+}
+
+.nav-list li a:hover {
+    color: #007bff;
+}
+
+.featured {
+    background: #f8f9fa;
+    padding: 100px 0;
+    text-align: center;
+    /* Additional styling for featured content */
+}
+
+.general-content {
+    padding: 50px 0;
+    /* Additional styling for general content */
+}
+
+footer {
+    background: #343a40;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 30px;
+}
+
 }
 
 footer {
