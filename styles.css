@@ -1,73 +1,68 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-
-body, h1, h2, h3, p {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    color: #333;
-}
-
-header {
+/* Content Cards */
+.card {
     background: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.nav-list {
-    list-style: none;
-    padding: 0;
-    text-align: center;
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
 }
 
-.nav-list li {
-    display: inline-block;
-    margin-right: 20px;
-}
-
-.nav-list li:last-child {
-    margin-right: 0;
-}
-
-.nav-list li a {
-    text-decoration: none;
-    color: #333;
-    text-transform: uppercase;
-    font-weight: 700;
-    transition: color 0.3s;
-}
-
-.nav-list li a:hover {
-    color: #007bff;
-}
-
-.featured {
-    background: #f8f9fa;
-    padding: 100px 0;
-    text-align: center;
-    /* Additional styling for featured content */
-}
-
-.general-content {
-    padding: 50px 0;
-    /* Additional styling for general content */
-}
-
+/* Footer Styling */
 footer {
     background: #343a40;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    margin-top: 30px;
+    color: #f8f9fa;
+    padding: 40px 0;
 }
 
+footer p {
+    margin: 0;
+    font-size: 0.9em;
 }
 
-footer {
-    background: #002d5a; /* 더 어두운 파란색 */
-    color: white;
+footer a {
+    color: #f8f9fa;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Accent Color */
+.accent {
+    color: #007bff; /* Same as hover color for consistency */
+}
+
+/* General Content Styling */
+.general-content h2 {
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+.general-content p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Featured Section Styling */
+.featured h1 {
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+.featured p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+/* Adjusting the nav to better suit the style */
+.nav-list {
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
