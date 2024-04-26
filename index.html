@@ -1,38 +1,34 @@
+<!DOCTYPE html>
 <html lang="en">
-    <script>
-// 카테고리 선택에 따른 동적 콘텐츠 표시
-function showCategory(category) {
-    var categories = document.querySelectorAll('.category-content');
-    categories.forEach(function(content) {
-        content.style.display = 'none'; // 모든 카테고리 숨기기
-    });
-
-    var selectedCategory = document.getElementById(category);
-    selectedCategory.style.display = 'block'; // 선택된 카테고리만 표시
-}
-</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hack Quest - Home</title>
+    <title>Hack Quest</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to Hack Quest!</h1>
-        <nav>
-            <ul>
-                <li><a href="about.html">About</a></li>
-                <li><a href="quests.html">Quests</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <p>Explore and conquer the quests to become the ultimate hacker!</p>
-    </main>
-    <footer>
-        <p>Copyright © 2023 Hack Quest</p>
-    </footer>
+    <div class="container">
+        <header>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="quests.html">Quests</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="featured">
+                <!-- Featured content goes here -->
+            </section>
+            <section class="general-content">
+                <!-- General content goes here -->
+            </section>
+        </main>
+        <footer>
+            <!-- Footer content goes here -->
+        </footer>
+    </div>
 </body>
 </html>
