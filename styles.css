@@ -30,9 +30,35 @@ nav ul li a {
     text-decoration: none;
 }
 
+section {
+    margin: 20px;
+    padding: 20px;
+    background: #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+section h2 {
+    color: #333;
+}
+
+
 main {
     padding: 20px;
     text-align: center;
+}
+
+main p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+a {
+    color: #0066cc;
+}
+
+a:hover {
+    color: #004c99;
 }
 
 footer {
