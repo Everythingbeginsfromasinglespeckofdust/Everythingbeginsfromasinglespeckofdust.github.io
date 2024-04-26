@@ -1,4 +1,16 @@
 <html lang="en">
+    <script>
+// 카테고리 선택에 따른 동적 콘텐츠 표시
+function showCategory(category) {
+    var categories = document.querySelectorAll('.category-content');
+    categories.forEach(function(content) {
+        content.style.display = 'none'; // 모든 카테고리 숨기기
+    });
+
+    var selectedCategory = document.getElementById(category);
+    selectedCategory.style.display = 'block'; // 선택된 카테고리만 표시
+}
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
