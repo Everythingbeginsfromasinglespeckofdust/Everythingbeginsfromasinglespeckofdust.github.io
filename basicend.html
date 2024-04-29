@@ -81,19 +81,30 @@
         <p>© 2024 문제 풀이 사이트. All rights reserved.</p>
     </footer>
     <script>
-        let totalFailCount = 0;
-let totalSuccessCount = 0;
+        function getCookie(name) {
+        const nameEQ = name + '=';
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
 
-for (let i = 1; i <= 5; i++) {
-    const problemFailCount = getCookie(`problem${i}FailCount`) || 0;
-    const problemSuccessCount = getCookie(`problem${i}SuccessCount`) || 0;
+    let totalFailCount = 0;
+    let totalSuccessCount = 0;
 
-    totalFailCount += parseInt(problemFailCount);
-    totalSuccessCount += parseInt(problemSuccessCount);
-}
+    for (let i = 1; i <= 5; i++) {
+        const problemFailCount = getCookie(`problem${i}FailCount`) || 0;
+        const problemSuccessCount = getCookie(`problem${i}SuccessCount`) || 0;
 
-document.getElementById('failCount').textContent = totalFailCount;
-document.getElementById('successCount').textContent = totalSuccessCount;
+        totalFailCount += parseInt(problemFailCount);
+        totalSuccessCount += parseInt(problemSuccessCount);
+    }
+
+    document.getElementById('failCount').textContent = totalFailCount;
+    document.getElementById('successCount').textContent = totalSuccessCount;
     </script>
 </body>
 </html>
