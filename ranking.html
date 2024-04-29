@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HackQuest</title>
+    <title>랭킹</title>
     <style>
-                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -35,19 +35,16 @@
         nav a:hover {
             color: #00C9FF;
         }
-main {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 600px;
-    margin: 0 auto;
+        h2 {
+    text-align: center; /* 가운데 정렬 */
+    margin-bottom: 20px; /* 아래 여백 20px */
 }
-
-main p {
-    word-break: keep-all;
-    line-height: 1.5;
-}
+        main {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
         .problem-btn {
             background: linear-gradient(135deg, #00C9FF, #92FE9D);
             border: none;
@@ -81,23 +78,26 @@ main p {
         <h1>HackQuest</h1>
     </header>
     <nav>
-        <a onclick="goToPage('index.html')">홈</a>
-        <a onclick="goToPage('problem-list.html')">문제</a>
-        <a onclick="goToPage('ranking.html')">랭킹</a>
-        <a onclick="goToPage('help.html')">도움말</a>
+    	<a onclick="goToPage('index.html')">홈</a>
+    	<a onclick="goToPage('problem-list.html')">문제</a>
+    	<a onclick="goToPage('ranking.html')">랭킹</a>
+    	<a onclick="goToPage('help.html')">도움말</a>
     </nav>
+        <h2>BestRanking</h2>
     <main>
-        <h2>환영합니다!</h2><br>
-        <p>여기서 다양한 문제를 풀어볼 수 있습니다.</p>
-        <p>문제를 풀면서 실력을 기를 수 있습니다.</p><br><br>
-        <br><button onclick="goToPage('problem-list.html')">문제 풀기</button>
+        <ol>
+            <li>1위 사용자 이름</li>
+            <li>2위 사용자 이름</li>
+            <li>3위 사용자 이름</li>
+            <!-- 추가적인 랭킹 데이터 -->
+        </ol>
     </main>
     <footer>
         <p>&copy; 2024 문제 풀이 사이트. All rights reserved.</p>
     </footer>
     <script>
-	function goToPage(pageName) {
-            	window.location.href = pageName;
+        function goToPage(pageName) {
+            window.location.href = pageName;
         }
     </script>
 </body>

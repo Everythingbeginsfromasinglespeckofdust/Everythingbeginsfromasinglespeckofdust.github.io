@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic 결과</title>
+    <style>
+        /* 기존 스타일 유지 */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(90deg, #00C9FF, #92FE9D);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            background-color: #fff;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #00C9FF;
+        }
+        main {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .result-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>HackQuest</h1>
+    </header>
+    <nav>
+        <a href="index.html">홈</a>
+        <a href="problem-list.html">문제 목록</a>
+        <a href="ranking.html">랭킹</a>
+        <a href="help.html">도움말</a>
+    </nav>
+    <main>
+        <h2>Basic 결과</h2>
+        <div class="result-box">
+            <h3>총 걸린 시간</h3>
+            <p id="totalTime">00:00:00</p>
+            <h3>실패 횟수</h3>
+            <p id="failCount">0</p>
+            <h3>성공 횟수</h3>
+            <p id="successCount">0</p>
+        </div>
+    </main>
+    <footer>
+        <p>© 2024 문제 풀이 사이트. All rights reserved.</p>
+    </footer>
+    <script>
+        let totalFailCount = 0;
+let totalSuccessCount = 0;
+
+for (let i = 1; i <= 5; i++) {
+    const problemFailCount = getCookie(`problem${i}FailCount`) || 0;
+    const problemSuccessCount = getCookie(`problem${i}SuccessCount`) || 0;
+
+    totalFailCount += parseInt(problemFailCount);
+    totalSuccessCount += parseInt(problemSuccessCount);
+}
+
+document.getElementById('failCount').textContent = totalFailCount;
+document.getElementById('successCount').textContent = totalSuccessCount;
+    </script>
+</body>
+</html>

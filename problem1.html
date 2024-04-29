@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HackQuest</title>
+    <title>문제 1</title>
     <style>
-                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
+        /* 기존 스타일 유지 */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -35,19 +34,12 @@
         nav a:hover {
             color: #00C9FF;
         }
-main {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-main p {
-    word-break: keep-all;
-    line-height: 1.5;
-}
+        main {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         .problem-btn {
             background: linear-gradient(135deg, #00C9FF, #92FE9D);
             border: none;
@@ -81,24 +73,59 @@ main p {
         <h1>HackQuest</h1>
     </header>
     <nav>
-        <a onclick="goToPage('index.html')">홈</a>
-        <a onclick="goToPage('problem-list.html')">문제</a>
-        <a onclick="goToPage('ranking.html')">랭킹</a>
-        <a onclick="goToPage('help.html')">도움말</a>
+        <a href="index.html">홈</a>
+        <a href="problem-list.html">문제 목록</a>
+        <a href="ranking.html">랭킹</a>
+        <a href="help.html">도움말</a>
     </nav>
     <main>
-        <h2>환영합니다!</h2><br>
-        <p>여기서 다양한 문제를 풀어볼 수 있습니다.</p>
-        <p>문제를 풀면서 실력을 기를 수 있습니다.</p><br><br>
-        <br><button onclick="goToPage('problem-list.html')">문제 풀기</button>
+        <h2>문제 1</h2>
+        <p>문제 설명 ...</p>
+        <input type="text" id="answer" placeholder="정답 입력">
+        <div>
+            <button class="problem-btn" onclick="checkAnswer()">다음</button>
+        </div>
     </main>
     <footer>
-        <p>&copy; 2024 문제 풀이 사이트. All rights reserved.</p>
+        <p>© 2024 문제 풀이 사이트. All rights reserved.</p>
     </footer>
     <script>
-	function goToPage(pageName) {
-            	window.location.href = pageName;
+        function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = 'expires=' + date.toUTCString();
+        document.cookie = name + '=' + value + ';' + expires + ';path=/';
+    }
+
+    function getCookie(name) {
+        const nameEQ = name + '=';
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
         }
+        return null;
+    }
+
+    let failCount = getCookie('problem1FailCount') || 0;
+    let successCount = getCookie('problem1SuccessCount') || 0;
+
+    function checkAnswer() {
+        const answer = document.getElementById('answer').value;
+        const correctAnswer = 'apple';
+
+        if (answer.toLowerCase() === correctAnswer) {
+            successCount++;
+            setCookie('problem1SuccessCount', successCount, 365);
+
+            window.location.href = 'problem2.html';
+        } else {
+            failCount++;
+            setCookie('problem1FailCount', failCount, 365);
+            alert('정답이 아닙니다. 다시 시도해주세요.');
+        }
+    }
     </script>
 </body>
 </html>
