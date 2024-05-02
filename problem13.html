@@ -85,14 +85,14 @@
         <input type="text" id="answer" placeholder="정답 입력">
         <div>
             <button class="problem-btn" onclick="goToPreviousProblem()">이전</button>
-            <button class="problem-btn" onclick="checkAnswer()">다음</button>
+            <button class="problem-btn" onclick="checkAnswer()">LinuxEnd</button>
         </div>
     </main>
     <footer>
         <p>© 2024 문제 풀이 사이트. All rights reserved.</p>
     </footer>
     <script>
-        function setCookie(name, value, days) {
+                function setCookie(name, value, days) {
             const date = new Date();
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             const expires = 'expires=' + date.toUTCString();
@@ -111,9 +111,22 @@
         }
 
         function setProblemCookie(problemNumber, isSuccess, startTime) {
-            const cookieName = `problem${problemNumber}`;
-            const cookieValue = `${isSuccess ? 'success' : 'fail'},${startTime}`;
-            setCookie(cookieName, cookieValue, 365);
+            const successCookieName = `problem${problemNumber}Success`;
+            const failCookieName = `problem${problemNumber}Fail`;
+            const timeCookieName = `problem${problemNumber}Time`;
+
+            if (isSuccess) {
+                const successCount = parseInt(getCookie(successCookieName) || 0) + 1;
+                setCookie(successCookieName, successCount, 365);
+            } else {
+                const failCount = parseInt(getCookie(failCookieName) || 0) + 1;
+                setCookie(failCookieName, failCount, 365);
+            }
+
+            const endTime = new Date().getTime();
+            const elapsedTime = endTime - startTime;
+            const totalTime = parseInt(getCookie(timeCookieName) || 0) + elapsedTime;
+            setCookie(timeCookieName, totalTime, 365);
         }
 
         let startTime;
