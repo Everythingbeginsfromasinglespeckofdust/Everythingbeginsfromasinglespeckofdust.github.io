@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic 결과</title>
+    <style>
+        /* 기존 스타일 유지 */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(90deg, #00C9FF, #92FE9D);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            background-color: #fff;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #00C9FF;
+        }
+        main {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .result-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>HackQuest</h1>
+    </header>
+    <nav>
+        <a href="index.html">홈</a>
+        <a href="problem-list.html">문제 목록</a>
+        <a href="ranking.html">랭킹</a>
+        <a href="help.html">도움말</a>
+    </nav>
+    <main>
+        <h2>Linux 결과</h2>
+        <div class="result-box">
+            <h3>총 걸린 시간</h3>
+            <p id="totalTime">00:00:00</p>
+            <h3>실패 횟수</h3>
+            <p id="failCount">0</p>
+            <h3>성공 횟수</h3>
+            <p id="successCount">0</p>
+        </div>
+    </main>
+    <footer>
+        <p>© 2024 문제 풀이 사이트. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function getCookie(name) {
+            // getCookie 함수 구현 (이전에 제공한 코드에 있음)
+        }
+
+        function formatTime(time) {
+            const hours = Math.floor(time / 3600000);
+            const minutes = Math.floor((time % 3600000) / 60000);
+            const seconds = Math.floor((time % 60000) / 1000);
+
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        let totalSuccessCount = 0;
+        let totalFailCount = 0;
+        let totalTime = 0;
+
+        for (let i = 6; i <= 13; i++) {
+            const cookieName = `problem${i}`;
+            const cookieValue = getCookie(cookieName);
+
+            if (cookieValue) {
+                const [result, startTime] = cookieValue.split(',');
+                const endTime = new Date().getTime();
+                const elapsedTime = endTime - startTime;
+
+                if (result === 'success') {
+                    totalSuccessCount++;
+                } else {
+                    totalFailCount++;
+                }
+
+                totalTime += elapsedTime;
+            }
+        }
+
+        const totalTimeElement = document.getElementById('totalTime');
+        const failCountElement = document.getElementById('failCount');
+        const successCountElement = document.getElementById('successCount');
+
+        totalTimeElement.textContent = formatTime(totalTime);
+        failCountElement.textContent = totalFailCount;
+        successCountElement.textContent = totalSuccessCount;
+    </script>
+</body>
+</html>
