@@ -82,7 +82,7 @@
     </footer>
 
     <script>
-        function getCookie(name) {
+function getCookie(name) {
             const nameEQ = name + '=';
             const ca = document.cookie.split(';');
             for (let i = 0; i < ca.length; i++) {
@@ -92,7 +92,6 @@
             }
             return null;
         }
-
         function formatTime(time) {
             const hours = Math.floor(time / 3600000);
             const minutes = Math.floor((time % 3600000) / 60000);
@@ -106,22 +105,17 @@
         let totalTime = 0;
 
         for (let i = 6; i <= 13; i++) {
-            const cookieName = `problem${i}`;
-            const cookieValue = getCookie(cookieName);
+            const successCookieName = `problem${i}Success`;
+            const failCookieName = `problem${i}Fail`;
+            const timeCookieName = `problem${i}Time`;
 
-            if (cookieValue) {
-                const [result, startTime] = cookieValue.split(',');
-                const endTime = new Date().getTime();
-                const elapsedTime = endTime - startTime;
+            const successCount = parseInt(getCookie(successCookieName) || 0);
+            const failCount = parseInt(getCookie(failCookieName) || 0);
+            const elapsedTime = parseInt(getCookie(timeCookieName) || 0);
 
-                if (result === 'success') {
-                    totalSuccessCount++;
-                } else {
-                    totalFailCount++;
-                }
-
-                totalTime += elapsedTime;
-            }
+            totalSuccessCount += successCount;
+            totalFailCount += failCount;
+            totalTime += elapsedTime;
         }
 
         const totalTimeElement = document.getElementById('totalTime');
@@ -131,6 +125,5 @@
         totalTimeElement.textContent = formatTime(totalTime);
         failCountElement.textContent = totalFailCount;
         successCountElement.textContent = totalSuccessCount;
-    </script>
 </body>
 </html>
