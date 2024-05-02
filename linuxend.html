@@ -62,7 +62,7 @@
     </header>
     <nav>
         <a href="index.html">홈</a>
-        <a href="problem-list.html">문제 목록</a>
+        <a href="problem-list.html">문제</a>
         <a href="ranking.html">랭킹</a>
         <a href="help.html">도움말</a>
     </nav>
@@ -83,7 +83,14 @@
 
     <script>
         function getCookie(name) {
-            // getCookie 함수 구현 (이전에 제공한 코드에 있음)
+            const nameEQ = name + '=';
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
         }
 
         function formatTime(time) {
