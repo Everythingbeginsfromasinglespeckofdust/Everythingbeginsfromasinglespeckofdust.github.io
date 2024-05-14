@@ -31,16 +31,27 @@
     </footer>
     <script src="scripts.js"></script>
     <script>
+        function formatTime(ms) {
+            const seconds = Math.floor(ms / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+
+            return `${String(hours).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+        }
+
         let totalFailCount = 0;
         let totalSuccessCount = 0;
+        let totalTime = 0;
 
         for (let i = 1; i <= 5; i++) {
             totalFailCount += parseInt(getCookie(`problem${i}FailCount`) || 0);
             totalSuccessCount += parseInt(getCookie(`problem${i}SuccessCount`) || 0);
+            totalTime += parseInt(getCookie(`problem${i}Time`) || 0);
         }
 
         document.getElementById('failCount').textContent = totalFailCount;
         document.getElementById('successCount').textContent = totalSuccessCount;
+        document.getElementById('totalTime').textContent = formatTime(totalTime);
     </script>
 </body>
 </html>

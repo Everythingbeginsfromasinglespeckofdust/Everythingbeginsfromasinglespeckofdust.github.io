@@ -22,7 +22,7 @@
         <input type="text" id="answer" placeholder="정답 입력">
         <div>
             <button class="problem-btn" onclick="goToPreviousProblem()">이전</button>
-            <button class="problem-btn" onclick="goToBasicEnd()">Basic 결과 보기</button>
+            <button class="problem-btn" id="basicEndBtn" onclick="checkAnswer()">Basic 결과 보기</button>
         </div>
     </main>
     <footer>
@@ -30,12 +30,17 @@
     </footer>
     <script src="scripts.js"></script>
     <script>
+        const startTime = new Date().getTime();
+
         function checkAnswer() {
             const answer = document.getElementById('answer').value;
             const correctAnswer = 'apple';
+            const endTime = new Date().getTime();
+            const timeTaken = endTime - startTime;
 
             if (answer.toLowerCase() === correctAnswer) {
                 setCookie('problem5SuccessCount', parseInt(getCookie('problem5SuccessCount') || 0) + 1, 365);
+                setCookie('problem5Time', timeTaken, 365);
                 window.location.href = 'basicend.html';
             } else {
                 setCookie('problem5FailCount', parseInt(getCookie('problem5FailCount') || 0) + 1, 365);
@@ -45,10 +50,6 @@
 
         function goToPreviousProblem() {
             window.location.href = 'problem4.html';
-        }
-
-        function goToBasicEnd() {
-            checkAnswer();
         }
     </script>
 </body>

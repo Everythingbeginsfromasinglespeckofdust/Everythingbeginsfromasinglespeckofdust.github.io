@@ -30,12 +30,17 @@
     </footer>
     <script src="scripts.js"></script>
     <script>
+        const startTime = new Date().getTime();
+
         function checkAnswer() {
             const answer = document.getElementById('answer').value;
             const correctAnswer = 'apple';
+            const endTime = new Date().getTime();
+            const timeTaken = endTime - startTime;
 
             if (answer.toLowerCase() === correctAnswer) {
                 setCookie('problem2SuccessCount', parseInt(getCookie('problem2SuccessCount') || 0) + 1, 365);
+                setCookie('problem2Time', timeTaken, 365);
                 window.location.href = 'problem3.html';
             } else {
                 setCookie('problem2FailCount', parseInt(getCookie('problem2FailCount') || 0) + 1, 365);
