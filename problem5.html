@@ -3,70 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>문제 1</title>
-    <style>
-        /* 기존 스타일 유지 */
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        header {
-            background: linear-gradient(90deg, #00C9FF, #92FE9D);
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        nav {
-            background-color: #fff;
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        nav a {
-            color: #333;
-            text-decoration: none;
-            padding: 10px;
-            transition: color 0.3s ease;
-        }
-        nav a:hover {
-            color: #00C9FF;
-        }
-        main {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .problem-btn {
-            background: linear-gradient(135deg, #00C9FF, #92FE9D);
-            border: none;
-            color: #fff;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 10px;
-            cursor: pointer;
-            border-radius: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .problem-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <title>문제 5</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
@@ -74,62 +12,44 @@
     </header>
     <nav>
         <a href="index.html">홈</a>
-        <a href="problem-list.html">문제</a>
-        <a href="ranking.html">랭킹</a>
+        <a href="problem-list.html">문제 목록</a>
         <a href="help.html">도움말</a>
     </nav>
     <main>
         <h1>BASIC</h1>
         <h2>문제 5</h2>
         <p>문제 설명 ...</p>
-        <input type="text" id="answer" placeholder="정답 입력" onchange="checkAnswer(this.value)">
-
+        <input type="text" id="answer" placeholder="정답 입력">
         <div>
             <button class="problem-btn" onclick="goToPreviousProblem()">이전</button>
-            <button class="problem-btn" id="basicEndBtn" onclick="goToBasicEnd()">Basic 결과 보기</button>
+            <button class="problem-btn" onclick="goToBasicEnd()">Basic 결과 보기</button>
         </div>
     </main>
     <footer>
         <p>© 2024 문제 풀이 사이트. All rights reserved.</p>
     </footer>
+    <script src="scripts.js"></script>
     <script>
-        function setCookie(name, value, days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        const expires = 'expires=' + date.toUTCString();
-        document.cookie = name + '=' + value + ';' + expires + ';path=/';
-    }
+        function checkAnswer() {
+            const answer = document.getElementById('answer').value;
+            const correctAnswer = 'apple';
 
-    function getCookie(name) {
-        const nameEQ = name + '=';
-        const ca = document.cookie.split(';');
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            if (answer.toLowerCase() === correctAnswer) {
+                setCookie('problem5SuccessCount', parseInt(getCookie('problem5SuccessCount') || 0) + 1, 365);
+                window.location.href = 'basicend.html';
+            } else {
+                setCookie('problem5FailCount', parseInt(getCookie('problem5FailCount') || 0) + 1, 365);
+                alert('정답이 아닙니다. 다시 시도해주세요.');
+            }
         }
-        return null;
-    }
 
-    const correctAnswer = 'apple';
-    let failCount = getCookie('problem5FailCount') || 0;
-    let successCount = getCookie('problem5SuccessCount') || 0;
-
-    function goToBasicEnd() {
-        const answer = document.getElementById('answer').value;
-
-        if (answer.toLowerCase() === correctAnswer) {
-            successCount++;
-            setCookie('problem5SuccessCount', successCount, 365);
-
-            window.location.href = 'basicend.html';
-        } else {
-            failCount++;
-            setCookie('problem5FailCount', failCount, 365);
-            alert('정답이 아닙니다. 다시 시도해주세요.');
+        function goToPreviousProblem() {
+            window.location.href = 'problem4.html';
         }
-    }
+
+        function goToBasicEnd() {
+            checkAnswer();
+        }
     </script>
 </body>
 </html>
-

@@ -3,87 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>문제</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        header {
-            background: linear-gradient(90deg, #00C9FF, #92FE9D);
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        nav {
-            background-color: #fff;
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        nav a {
-            color: #333;
-            text-decoration: none;
-            padding: 10px;
-            transition: color 0.3s ease;
-        }
-        nav a:hover {
-            color: #00C9FF;
-        }
-h2 {
-    text-align: center; /* 가운데 정렬 */
-    margin-bottom: 20px; /* 아래 여백 20px */
-}
-
-        main {
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* 오른쪽 정렬 */
-}
-.category {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 40px;
-}
-.buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-        .problem-btn {
-    background: linear-gradient(135deg, #00C9FF, #92FE9D);
-    border: none;
-    color: #fff;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px; /* 버튼 사이의 간격을 20px로 설정 */
-    cursor: pointer;
-    border-radius: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-        .problem-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <title>문제 목록</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
@@ -92,59 +13,49 @@ h2 {
     <nav>
         <a onclick="goToPage('index.html')">홈</a>
         <a onclick="goToPage('problem-list.html')">문제</a>
-        <a onclick="goToPage('ranking.html')">랭킹</a>
         <a onclick="goToPage('help.html')">도움말</a>
     </nav>
-	<h2>문제</h2>
-<main>
-    <div class="category">
-        <h2>basic</h2>
-        <div class="buttons">
-            <button class="problem-btn" onclick="goToProblem('problem1.html')">문제 1</button>
-            <button class="problem-btn" onclick="goToProblem('problem2.html')">문제 2</button>
-            <button class="problem-btn" onclick="goToProblem('problem3.html')">문제 3</button>
-            <button class="problem-btn" onclick="goToProblem('problem4.html')">문제 4</button>
-            <button class="problem-btn" onclick="goToProblem('problem5.html')">문제 5</button>
+    <main>
+        <h2>문제 목록</h2>
+        <div class="category">
+            <h2>basic</h2>
+            <div class="buttons">
+                <button class="problem-btn" onclick="goToProblem('problem1.html')">문제 1</button>
+                <button class="problem-btn" onclick="goToProblem('problem2.html')">문제 2</button>
+                <button class="problem-btn" onclick="goToProblem('problem3.html')">문제 3</button>
+                <button class="problem-btn" onclick="goToProblem('problem4.html')">문제 4</button>
+                <button class="problem-btn" onclick="goToProblem('problem5.html')">문제 5</button>
+            </div>
         </div>
-    </div>
-    <div class="category">
-        <h2>linux</h2>
-        <div class="buttons">
-            <button class="problem-btn" onclick="goToProblem('problem6.html')">문제 6</button>
-            <button class="problem-btn" onclick="goToProblem('problem7.html')">문제 7</button>
-            <button class="problem-btn" onclick="goToProblem('problem8.html')">문제 8</button>
-            <button class="problem-btn" onclick="goToProblem('problem9.html')">문제 9</button>
-            <button class="problem-btn" onclick="goToProblem('problem10.html')">문제 10</button>
-            <button class="problem-btn" onclick="goToProblem('problem11.html')">문제 11</button>
-            <button class="problem-btn" onclick="goToProblem('problem12.html')">문제 12</button>
-            <button class="problem-btn" onclick="goToProblem('problem13.html')">문제 13</button>
+        <div class="category">
+            <h2>linux</h2>
+            <div class="buttons">
+                <button class="problem-btn" onclick="goToProblem('problem6.html')">문제 6</button>
+                <button class="problem-btn" onclick="goToProblem('problem7.html')">문제 7</button>
+                <button class="problem-btn" onclick="goToProblem('problem8.html')">문제 8</button>
+                <button class="problem-btn" onclick="goToProblem('problem9.html')">문제 9</button>
+                <button class="problem-btn" onclick="goToProblem('problem10.html')">문제 10</button>
+                <button class="problem-btn" onclick="goToProblem('problem11.html')">문제 11</button>
+                <button class="problem-btn" onclick="goToProblem('problem12.html')">문제 12</button>
+                <button class="problem-btn" onclick="goToProblem('problem13.html')">문제 13</button>
+            </div>
         </div>
-    </div>
-    <div class="category">
-        <h2>web</h2>
-        <div class="buttons">
-            <button class="problem-btn" onclick="goToProblem('problem14.html')">문제 14</button>
-            <button class="problem-btn" onclick="goToProblem('problem15.html')">문제 15</button>
-            <button class="problem-btn" onclick="goToProblem('problem16.html')">문제 16</button>
-            <button class="problem-btn" onclick="goToProblem('problem17.html')">문제 17</button>
-            <button class="problem-btn" onclick="goToProblem('problem18.html')">문제 18</button>
-            <button class="problem-btn" onclick="goToProblem('problem19.html')">문제 19</button>
-            <button class="problem-btn" onclick="goToProblem('problem20.html')">문제 20</button>
+        <div class="category">
+            <h2>web</h2>
+            <div class="buttons">
+                <button class="problem-btn" onclick="goToProblem('problem14.html')">문제 14</button>
+                <button class="problem-btn" onclick="goToProblem('problem15.html')">문제 15</button>
+                <button class="problem-btn" onclick="goToProblem('problem16.html')">문제 16</button>
+                <button class="problem-btn" onclick="goToProblem('problem17.html')">문제 17</button>
+                <button class="problem-btn" onclick="goToProblem('problem18.html')">문제 18</button>
+                <button class="problem-btn" onclick="goToProblem('problem19.html')">문제 19</button>
+                <button class="problem-btn" onclick="goToProblem('problem20.html')">문제 20</button>
+            </div>
         </div>
-    </div>
-        <!-- 문제 3부터 문제 20까지 추가 -->
     </main>
     <footer>
         <p>&copy; 2024 문제 풀이 사이트. All rights reserved.</p>
     </footer>
-    <script>
-        function goToPage(pageName) {
-            window.location.href = pageName;
-        }
-        
-        function goToProblem(problemPage) {
-            window.location.href = problemPage;
-        }
-    </script>
+    <script src="scripts.js"></script>
 </body>
 </html>

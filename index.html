@@ -4,77 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HackQuest</title>
-    <style>
-                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        header {
-            background: linear-gradient(90deg, #00C9FF, #92FE9D);
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        nav {
-            background-color: #fff;
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        nav a {
-            color: #333;
-            text-decoration: none;
-            padding: 10px;
-            transition: color 0.3s ease;
-        }
-        nav a:hover {
-            color: #00C9FF;
-        }
-main {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-main p {
-    word-break: keep-all;
-    line-height: 1.5;
-}
-        .problem-btn {
-            background: linear-gradient(135deg, #00C9FF, #92FE9D);
-            border: none;
-            color: #fff;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 10px;
-            cursor: pointer;
-            border-radius: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .problem-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
@@ -83,22 +13,17 @@ main p {
     <nav>
         <a onclick="goToPage('index.html')">홈</a>
         <a onclick="goToPage('problem-list.html')">문제</a>
-        <a onclick="goToPage('ranking.html')">랭킹</a>
         <a onclick="goToPage('help.html')">도움말</a>
     </nav>
     <main>
-        <h2>환영합니다!</h2><br>
+        <h2>환영합니다!</h2>
         <p>여기서 다양한 문제를 풀어볼 수 있습니다.</p>
-        <p>문제를 풀면서 실력을 기를 수 있습니다.</p><br><br>
-        <br><button onclick="goToPage('problem-list.html')">문제 풀기</button>
+        <p>문제를 풀면서 실력을 기를 수 있습니다.</p>
+        <button onclick="goToPage('problem-list.html')">문제 풀기</button>
     </main>
     <footer>
         <p>&copy; 2024 문제 풀이 사이트. All rights reserved.</p>
     </footer>
-    <script>
-	function goToPage(pageName) {
-            	window.location.href = pageName;
-        }
-    </script>
+    <script src="scripts.js"></script>
 </body>
 </html>
