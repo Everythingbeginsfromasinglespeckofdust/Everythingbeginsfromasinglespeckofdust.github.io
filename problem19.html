@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>문제 4</title>
+    <title>문제 19</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -56,8 +56,8 @@
                 </div>
             </aside>
         <main class="content">
-            <h1>BASIC</h1>
-            <h2>문제 4</h2>
+            <h1>Web</h1>
+            <h2>문제 19</h2>
             <p>문제 설명 ...</p>
             <input type="text" id="answer" placeholder="정답 입력">
         <div class="button-container">
@@ -81,17 +81,17 @@
             const timeTaken = endTime - startTime;
 
             if (answer.toLowerCase() === correctAnswer) {
-                setCookie('problem4SuccessCount', parseInt(getCookie('problem4SuccessCount') || 0) + 1, 365);
-                setCookie('problem4Time', timeTaken, 365);
-                window.location.href = 'problem5.html';
+                setCookie('problem19SuccessCount', parseInt(getCookie('problem19SuccessCount') || 0) + 1, 365);
+                setCookie('problem19Time', timeTaken, 365);
+                window.location.href = 'problem20.html';
             } else {
-                setCookie('problem4FailCount', parseInt(getCookie('problem4FailCount') || 0) + 1, 365);
+                setCookie('problem19FailCount', parseInt(getCookie('problem19FailCount') || 0) + 1, 365);
                 alert('정답이 아닙니다. 다시 시도해주세요.');
             }
         }
 
         function goToPreviousProblem() {
-            window.location.href = 'problem3.html';
+            window.location.href = 'problem18.html';
         }
     </script>
 </body>

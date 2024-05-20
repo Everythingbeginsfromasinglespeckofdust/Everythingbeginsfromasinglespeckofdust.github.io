@@ -2,6 +2,18 @@ function goToPage(pageName) {
     window.location.href = pageName;
 }
 
+function toggleHeader() {
+    const header = document.querySelector('header');
+    const btn = document.getElementById('toggle-header-btn');
+    if (header.style.display === 'none') {
+        header.style.display = 'block';
+        btn.textContent = '^';
+    } else {
+        header.style.display = 'none';
+        btn.textContent = 'v';
+    }
+}
+
 function goToProblem(problemPage) {
     window.location.href = problemPage;
 }

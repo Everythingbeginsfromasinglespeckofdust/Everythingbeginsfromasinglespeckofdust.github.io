@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linux 결과</title>
+    <title>Web 결과</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
         <a href="help.html">도움말</a>
     </nav>
     <main>
-        <h2>Linux 결과</h2>
+        <h2>Web 결과</h2>
         <div class="result-box">
             <h3>총 걸린 시간</h3>
             <p id="totalTime">00:00:00</p>
@@ -43,7 +43,7 @@
         let totalSuccessCount = 0;
         let totalTime = 0;
 
-        for (let i = 6; i <= 13; i++) {
+        for (let i = 14; i <= 20; i++) {
             totalFailCount += parseInt(getCookie(`problem${i}FailCount`) || 0);
             totalSuccessCount += parseInt(getCookie(`problem${i}SuccessCount`) || 0);
             totalTime += parseInt(getCookie(`problem${i}Time`) || 0);
