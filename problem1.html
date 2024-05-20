@@ -77,11 +77,11 @@
 
         function checkAnswer() {
             const answer = document.getElementById('answer').value;
-            const correctAnswer = 'apple';
+            const correctAnswer = '44K544K/44Kq';
             const endTime = new Date().getTime();
             const timeTaken = endTime - startTime;
 
-            if (answer.toLowerCase() === correctAnswer) {
+            if (answer === correctAnswer) {
                 setCookie('problem1SuccessCount', parseInt(getCookie('problem1SuccessCount') || 0) + 1, 365);
                 setCookie('problem1Time', timeTaken, 365);
                 window.location.href = 'problem2.html';
