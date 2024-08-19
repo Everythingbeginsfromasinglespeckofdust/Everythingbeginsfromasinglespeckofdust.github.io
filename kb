@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>거래 내역 조회</title>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 360px; /* 전체 가로 넓이 조정 */
+            margin: auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            padding: 10px 20px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header img {
+            width: 24px;
+            height: 24px;
+        }
+        .header .title {
+            font-size: 14px;
+            text-align: left;
+            flex: 1;
+            margin-left: 10px;
+        }
+        .header .icons {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* 간격을 조정합니다 */
+        }
+        .account-info {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .account-info .title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .account-info .title img {
+            width: 16px;
+            height: 16px;
+        }
+        .account-info .balance {
+            font-size: 36px;
+            margin-top: 10px;
+            text-align: right;
+        }
+        .account-info .available-balance {
+            text-align: right;
+            font-size: 14px;
+            color: #888;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .buttons button {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .filters {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+        .toggle-balance {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        .toggle-balance label {
+            margin-left: 10px;
+        }
+        .months {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #888;
+            border-bottom: 1px solid #ddd;
+        }
+        .transactions {
+            padding: 20px 20px; /* 세로 넓이 조정 */
+        }
+        .transaction {
+            padding: 20px 0; /* 세로 넓이 조정 */
+            border-bottom: 1px solid #ddd;
+        }
+        .transaction:last-child {
+            border-bottom: none; /* 마지막 요소에는 구분선이 나타나지 않도록 함 */
+        }
+        .transaction .date {
+            font-size: 12px;
+            color: #888;
+        }
+        .transaction .description {
+            font-size: 16px;
+            margin-top: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .transaction .amount {
+            color: #000;
+        }
+        .transaction .amount .value {
+            color: red;
+        }
+        .transaction.deposit .amount .value {
+            color: blue;
+        }
+        .transaction .balance-after {
+            font-size: 12px;
+            color: #888;
+            text-align: right;
+            margin-top: 5px;
+        }
+        .month-header {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+        }
+        .month-content {
+            display: none;
+            padding: 0 20px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 20px;
+            margin-left: 10px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #b8860b;
+        }
+        input:checked + .slider:before {
+            transform: translateX(14px);
+        }
+        @media (max-width: 360px) {
+            .container {
+                border-radius: 0;
+            }
+            .header {
+                font-size: 12px;
+            }
+            .account-info .title, .account-info .balance, .account-info .available-balance {
+                font-size: 14px;
+            }
+            .buttons button {
+                font-size: 12px;
+            }
+            .transaction .description {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="back_icon.png" alt="Back">
+            <span class="title">거래내역조회</span>
+            <div class="icons">
+                <img src="home_icon.png" alt="Home">
+                <img src="menu_icon.png" alt="Menu">
+            </div>
+        </div>
+        <div class="account-info">
+            <div class="title">
+                <span>KB국민ONE통장</span>
+                <img src="edit_icon.png" alt="Edit">
+            </div>
+            <div>699601-04-170401</div>
+            <div class="balance">1,283,540원</div>
+            <div class="available-balance">출금가능금액 1,283,540원</div>
+        </div>
+        <div class="buttons">
+            <button>이체</button>
+            <button>모으기</button>
+            <button>ATM/창구출금</button>
+        </div>
+        <div class="filters">
+            <span>3개월 ・ 전체 ・ 최신순</span>
+        </div>
+        <div class="months">
+            <span>2024.07.01 ~ 2024.08.19</span>
+            <div class="toggle-balance">
+                <label for="show-balance">잔액표기</label>
+                <label class="switch">
+                    <input type="checkbox" id="show-balance" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+        <div class="month">
+            <div class="month-header">2024.08</div>
+            <div class="month-content">
+                <div class="transaction">
+                    <div class="date">2024.08.19 14:45:48</div>
+                    <div class="description">메가MGC커피죽전 <span class="amount">출금 <span class="value">3,500</span>원</span></div>
+                    <div class="balance-after">잔액 1,283,540원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.18 19:22:16</div>
+                    <div class="description">나홀로짐감삼 <span class="amount">출금 <span class="value">6,980</span>원</span></div>
+                    <div class="balance-after">잔액 1,287,040원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.17 14:14:52</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">3,300</span>원</span></div>
+                    <div class="balance-after">잔액 1,294,020원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.16 13:51:43</div>
+                    <div class="description">리춘시장 <span class="amount">출금 <span class="value">62,500</span>원</span></div>
+                    <div class="balance-after">잔액 1,297,320원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.16 11:08:00</div>
+                    <div class="description">고속버스승차권(KOBUS <span class="amount">출금 <span class="value">32,100</span>원</span></div>
+                    <div class="balance-after">잔액 1,359,820원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.16 09:14:29</div>
+                    <div class="description">카카오톡<span class="amount">출금 <span class="value">4,890</span>원</span></div>
+                    <div class="balance-after">잔액 1,391,920원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.14 20:20:14</div>
+                    <div class="description">나홀로짐감삼 <span class="amount">출금 <span class="value">6,980</span>원</span></div>
+                    <div class="balance-after">잔액 1,396,810원</div>
+                </div>
+                <div class="transaction deposit">
+                    <div class="date">2024.08.14 12:00:03</div>
+                    <div class="description">국민취업지원 <span class="amount">입금 <span class="value">500,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,403,790원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.13 13:40:59</div>
+                    <div class="description">고속버스승차권(KOBUS <span class="amount">출금 <span class="value">32,100</span>원</span></div>
+                    <div class="balance-after">잔액 903,790원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.13 13:10:37</div>
+                    <div class="description">KB_체크_후불_교통 <span class="amount">출금 <span class="value">68,513</span>원</span></div>
+                    <div class="balance-after">잔액 935,890원</div>
+                </div>
+                <div class="transaction deposit">
+                    <div class="date">2024.08.13 09:55:14</div>
+                    <div class="description">훈련비고용부 <span class="amount">입금 <span class="value">331,800</span>원</span></div>
+                    <div class="balance-after">잔액 1,004,403원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.11 18:12:02</div>
+                    <div class="description">나홀로짐감삼 <span class="amount">출금 <span class="value">6,980</span>원</span></div>
+                    <div class="balance-after">잔액 672,603원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.08 22:10:11</div>
+                    <div class="description">나홀로짐감삼 <span class="amount">출금 <span class="value">6,980</span>원</span></div>
+                    <div class="balance-after">잔액 679,583원</div>
+                </div>
+                <div class="transaction deposit">
+                    <div class="date">2024.08.07 22:15:54</div>
+                    <div class="description">윤다정(블리스) <span class="amount">입금 <span class="value">30,000</span>원</span></div>
+                    <div class="balance-after">잔액 686,563원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.07 18:16:28</div>
+                    <div class="description">웍스터 <span class="amount">출금 <span class="value">39,000</span>원</span></div>
+                    <div class="balance-after">잔액 656,563원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.06 14:51:17</div>
+                    <div class="description">동방만두전문전 <span class="amount">출금 <span class="value">20,000</span>원</span></div>
+                    <div class="balance-after">잔액 695,563원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.06 13:20:42</div>
+                    <div class="description">SR <span class="amount">출금 <span class="value">36,900</span>원</span></div>
+                    <div class="balance-after">잔액 715,563원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.05 15:37:30</div>
+                    <div class="description">버거당 <span class="amount">출금 <span class="value">10,500</span>원</span></div>
+                    <div class="balance-after">잔액 752,463원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.05 15:28:22</div>
+                    <div class="description">윤다정(블리스) <span class="amount">출금 <span class="value">30,000</span>원</span></div>
+                    <div class="balance-after">잔액 762,963원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.05 15:26:42</div>
+                    <div class="description">블리스 <span class="amount">출금 <span class="value">49,000</span>원</span></div>
+                    <div class="balance-after">잔액 792,963원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.03 16:53:12</div>
+                    <div class="description">SR <span class="amount">출금 <span class="value">37,000</span>원</span></div>
+                    <div class="balance-after">잔액 841,963원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.02 13:21:36</div>
+                    <div class="description">COGNOSPHERE PTE. LTD <span class="amount">출금 <span class="value">15,500</span>원</span></div>
+                    <div class="balance-after">잔액 878,963원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.08.02 12:11:16</div>
+                    <div class="description">욜로PC방대구본리직 <span class="amount">출금 <span class="value">18,500</span>원</span></div>
+                    <div class="balance-after">잔액 894,463원</div>
+                </div>
+              <div class="transaction">
+                    <div class="date">2024.08.01 15:19:11</div>
+                    <div class="description">해움정 <span class="amount">출금 <span class="value">34,000</span>원</span></div>
+                    <div class="balance-after">잔액 912,963원</div>
+                </div>
+            </div>
+            <div class="month-header">2024.07</div>
+            <div class="month-content">
+                <div class="transaction">
+                    <div class="date">2024.07.31 10:35:24</div>
+                    <div class="description">네이버플러스월간 <span class="amount">출금 <span class="value">4,900</span>원</span></div>
+                    <div class="balance-after">잔액 946,963원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.29 12:59:10</div>
+                    <div class="description">버거킹대구중앙로점 <span class="amount">출금 <span class="value">9,000</span>원</span></div>
+                    <div class="balance-after">잔액 951,863원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.28 21:56:35</div>
+                    <div class="description">피자스쿨감삼점 <span class="amount">출금 <span class="value">21,800</span>원</span></div>
+                    <div class="balance-after">잔액 960,863원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.28 13:15:12</div>
+                    <div class="description">배스킨라빈스(본리점) <span class="amount">출금 <span class="value">4,700</span>원</span></div>
+                    <div class="balance-after">잔액 982,663원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.28 13:03:43</div>
+                    <div class="description">정성순대죽전점 <span class="amount">출금 <span class="value">12,500</span>원</span></div>
+                    <div class="balance-after">잔액 987,363원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.26 13:36:23</div>
+                    <div class="description">언페이드 <span class="amount">출금 <span class="value">1,000</span>원</span></div>
+                    <div class="balance-after">잔액 999,863원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.26 13:35:53</div>
+                    <div class="description">덕산제면소 <span class="amount">출금 <span class="value">13,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,000,863원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.26 08:48:01</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,800</span>원</span></div>
+                    <div class="balance-after">잔액 1,013,863원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.25 13:28:28</div>
+                    <div class="description">소원반점 <span class="amount">출금 <span class="value">15,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,016,663원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.25 08:47:24</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,800</span>원</span></div>
+                    <div class="balance-after">잔액 1,031,663원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.24 13:22:52</div>
+                    <div class="description">반월당국밥 <span class="amount">출금 <span class="value">9,500</span>원</span></div>
+                    <div class="balance-after">잔액 1,034,463원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.24 08:41:22</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,800</span>원</span></div>
+                    <div class="balance-after">잔액 1,043,963원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.23 13:26:36</div>
+                    <div class="description">덕산제면소 <span class="amount">출금 <span class="value">14,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,046,763원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.23 08:48:03</div>
+                    <div class="description">빽다방대구반월당지 <span class="amount">출금 <span class="value">3,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,060,763원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.22 13:41:48</div>
+                    <div class="description">이타국시 <span class="amount">출금 <span class="value">14,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,063,763원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.22 08:41:19</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,800</span>원</span></div>
+                    <div class="balance-after">잔액 1,077,763원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.21 18:15:04</div>
+                    <div class="description">배달의민족 <span class="amount">출금 <span class="value">22,174</span>원</span></div>
+                    <div class="balance-after">잔액 1,080,563원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.20 22:00:34</div>
+                    <div class="description">세븐일레븐대구성당 <span class="amount">출금 <span class="value">4,600</span>원</span></div>
+                    <div class="balance-after">잔액 1,102,737원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.20 21:58:23</div>
+                    <div class="description">아이스크림할인점 <span class="amount">출금 <span class="value">8,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,107,337원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.20 21:45:03</div>
+                    <div class="description">종로백탄뼈구이 <span class="amount">출금 <span class="value">49,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,115,337원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.20 16:46:23</div>
+                    <div class="description">동행복권_정대한_N <span class="amount">출금 <span class="value">5,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,164,337원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.19 12:54:53</div>
+                    <div class="description">반월당닭강정 <span class="amount">출금 <span class="value">4,500</span>원</span></div>
+                    <div class="balance-after">잔액 1,169,337원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.19 12:54:23</div>
+                    <div class="description">GS25중구반월점 <span class="amount">출금 <span class="value">2,300</span>원</span></div>
+                    <div class="balance-after">잔액 1,173,837원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.19 08:46:13</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,800</span>원</span></div>
+                    <div class="balance-after">잔액 1,176,137원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.18 19:34:06</div>
+                    <div class="description">정성순대죽전점 <span class="amount">출금 <span class="value">12,500</span>원</span></div>
+                    <div class="balance-after">잔액 1,178,937원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.18 13:35:33</div>
+                    <div class="description">언페이드 <span class="amount">출금 <span class="value">1,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,191,437원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.18 13:01:21</div>
+                    <div class="description">써브웨이대구반월당 <span class="amount">출금 <span class="value">8,600</span>원</span></div>
+                    <div class="balance-after">잔액 1,192,437원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.18 08:48:28</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,800</span>원</span></div>
+                    <div class="balance-after">잔액 1,201,037원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.17 08:47:22</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,800</span>원</span></div>
+                    <div class="balance-after">잔액 1,203,837원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.16 22:23:48</div>
+                    <div class="description">가마치통닭(본리점) <span class="amount">출금 <span class="value">9,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,206,637원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.16 12:57:11</div>
+                    <div class="description">(주)샐러디대구동성 <span class="amount">출금 <span class="value">2,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,215,637원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.16 08:41:26</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,800</span>원</span></div>
+                    <div class="balance-after">잔액 1,225,237원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.16 08:07:10</div>
+                    <div class="description">맥도날드 <span class="amount">출금 <span class="value">3,700</span>원</span></div>
+                    <div class="balance-after">잔액 1,228,037원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.15 18:48:29</div>
+                    <div class="description">록스튜디오 <span class="amount">출금 <span class="value">30,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,231,737원</div>
+                </div>
+                <div class="transaction deposit">
+                    <div class="date">2024.07.15 15:15:52</div>
+                    <div class="description">국민취업지원 <span class="amount">입금 <span class="value">500,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,261,737원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.15 13:23:57</div>
+                    <div class="description">전원식당 <span class="amount">출금 <span class="value">13,000</span>원</span></div>
+                    <div class="balance-after">잔액 761,737원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.15 11:59:16</div>
+                    <div class="description">쿠팡 <span class="amount">출금 <span class="value">8,060</span>원</span></div>
+                    <div class="balance-after">잔액 774,737원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.15 08:41:15</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,800</span>원</span></div>
+                    <div class="balance-after">잔액 782,797원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.14 18:34:18</div>
+                    <div class="description">휘유헤어대구죽전 <span class="amount">출금 <span class="value">40,000</span>원</span></div>
+                    <div class="balance-after">잔액 785,597원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.13 16:39:34</div>
+                    <div class="description">동행복권_정대한_N <span class="amount">출금 <span class="value">5,000</span>원</span></div>
+                    <div class="balance-after">잔액 825,597원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.13 14:49:17</div>
+                    <div class="description">김정규 <span class="amount">출금 <span class="value">95,350</span>원</span></div>
+                    <div class="balance-after">잔액 830,597원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.12 19:05:42</div>
+                    <div class="description">COGNOSPHERE PTE. LTD <span class="amount">출금 <span class="value">10,000</span>원</span></div>
+                    <div class="balance-after">잔액 925,947원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.11 22:49:40</div>
+                    <div class="description">COGNOSPHERE PTE. LTD <span class="amount">출금 <span class="value">11,520</span>원</span></div>
+                    <div class="balance-after">잔액 935,947원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.11 13:06:20</div>
+                    <div class="description">(주)샐러디대구동성 <span class="amount">출금 <span class="value">8,600</span>원</span></div>
+                    <div class="balance-after">잔액 947,467원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.11 08:47:49</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,800</span>원</span></div>
+                    <div class="balance-after">잔액 956,067원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.10 18:15:14</div>
+                    <div class="description">엘.에이.멘(L.AMEN) <span class="amount">출금 <span class="value">11,000</span>원</span></div>
+                    <div class="balance-after">잔액 958,867원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.10 16:17:54</div>
+                    <div class="description">KB_체크_후불_교통 <span class="amount">출금 <span class="value">64,160</span>원</span></div>
+                    <div class="balance-after">잔액 969,867원</div>
+                </div>
+                <div class="transaction  deposit">
+                    <div class="date">2024.07.10 11:44:57</div>
+                    <div class="description">훈련비고용부 <span class="amount">입금 <span class="value">316,000</span>원</span></div>
+                    <div class="balance-after">잔액 1,034,027원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.10 08:48:03</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,800</span>원</span></div>
+                    <div class="balance-after">잔액 718,027원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.09 13:30:11</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,000</span>원</span></div>
+                    <div class="balance-after">잔액 720,827원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.09 13:10:54</div>
+                    <div class="description">바른돈카츠동성로 <span class="amount">출금 <span class="value">14,900</span>원</span></div>
+                    <div class="balance-after">잔액 722,827원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.08 13:35:24</div>
+                    <div class="description">대구만두 <span class="amount">출금 <span class="value">8,000</span>원</span></div>
+                    <div class="balance-after">잔액 737,727원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.07 18:02:54</div>
+                    <div class="description">피자팜비어죽전점 <span class="amount">출금 <span class="value">29,000</span>원</span></div>
+                    <div class="balance-after">잔액 745,727원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.06 20:30:35</div>
+                    <div class="description">박시웅의8번식당 <span class="amount">출금 <span class="value">30,000</span>원</span></div>
+                    <div class="balance-after">잔액 774,727원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.03 13:41:13</div>
+                    <div class="description">GS25시지청구점 <span class="amount">출금 <span class="value">3,500</span>원</span></div>
+                    <div class="balance-after">잔액 804,727원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.02 13:02:23</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,000</span>원</span></div>
+                    <div class="balance-after">잔액 808,227원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2024.07.01 12:56:04</div>
+                    <div class="description">몬스터커피 <span class="amount">출금 <span class="value">2,800</span>원</span></div>
+                    <div class="balance-after">잔액 810,227원</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.month-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                content.style.display = content.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+
+        document.getElementById('show-balance').addEventListener('change', (event) => {
+            document.querySelectorAll('.balance-after').forEach(balance => {
+                balance.style.display = event.target.checked ? 'block' : 'none';
+            });
+        });
+
+        // 초기 상태 설정
+        document.querySelectorAll('.month-content').forEach(content => {
+            content.style.display = 'none';
+        });
+        document.getElementById('show-balance').dispatchEvent(new Event('change'));
+    </script>
+</body>
+</html>
