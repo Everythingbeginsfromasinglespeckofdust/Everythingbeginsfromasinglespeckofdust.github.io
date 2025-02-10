@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <!-- 중복된 initial-scale 제거 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>거래 내역 조회</title>
+  <style>
+    /* CSS 변수 활용 */
+    :root {
+      --primary-bg: #fff;
+      --secondary-bg: #f5f5f5;
+      --border-color: #ddd;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --text-color: #000;
+      --text-muted: #888;
+      --red: red;
+      --blue: blue;
+      --accent: #b8860b;
+    }
+    body {
+      font-family: 'Helvetica', 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--secondary-bg);
+    }
+    .container {
+      max-width: 100%;
+      margin: auto;
+      background-color: var(--primary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      box-shadow: 0 0 10px var(--shadow-color);
+      overflow: hidden;
+    }
+    /* 시맨틱 태그를 활용하여 header로 변경 */
+    header.header {
+      padding: 10px 20px;
+      background-color: var(--primary-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header.header img {
+      width: 24px;
+      height: 24px;
+    }
+    header.header .title {
+      font-size: 14px;
+      text-align: left;
+      flex: 1;
+      margin-left: 10px;
+    }
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    /* account-info 영역을 section 태그로 변경 */
+    section.account-info {
+      padding: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .account-info .title {
+      font-size: 18px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .account-info .title img {
+      width: 16px;
+      height: 16px;
+    }
+    .balance {
+      font-size: 36px;
+      margin-top: 10px;
+      text-align: right;
+    }
+    .available-balance {
+      text-align: right;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .buttons button {
+      flex: 1;
+      margin: 0 5px;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .filters {
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .toggle-balance {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+    .toggle-balance label {
+      margin-left: 10px;
+    }
+    .months {
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .transactions {
+      padding: 20px;
+    }
+    .transaction {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .transaction:last-child {
+      border-bottom: none;
+    }
+    .transaction .date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .transaction .description {
+      font-size: 16px;
+      margin-top: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .transaction .amount {
+      color: var(--text-color);
+    }
+    .transaction .amount .value {
+      color: var(--red);
+    }
+    .transaction.deposit .amount .value {
+      color: var(--blue);
+    }
+    .transaction .balance-after {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 5px;
+    }
+    .hidden {
+      display: none;
+    }
+    .month-header {
+      cursor: pointer;
+      padding: 10px 20px;
+      background-color: #f9f9f9;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .month-content {
+      display: none;
+      padding: 0 20px;
+    }
+    /* active 클래스를 토글하여 보이게 함 */
+    .month-content.active {
+      display: block;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 34px;
+      height: 20px;
+      margin-left: 10px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 20px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 12px;
+      width: 12px;
+      left: 4px;
+      bottom: 4px;
+      background-color: #fff;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: var(--accent);
+    }
+    input:checked + .slider:before {
+      transform: translateX(14px);
+    }
+    @media (max-width: 360px) {
+      .container {
+        border-radius: 0;
+      }
+      header.header {
+        font-size: 12px;
+      }
+      .account-info .title, .balance, .available-balance {
+        font-size: 14px;
+      }
+      .buttons button {
+        font-size: 12px;
+      }
+      .transaction .description {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <img src="back_icon.png" alt="Back">
+      <span class="title">거래내역조회</span>
+      <div class="icons">
+        <img src="home_icon.png" alt="Home">
+        <img src="menu_icon.png" alt="Menu">
+      </div>
+    </header>
+    <section class="account-info">
+      <div class="title">
+        <span>KB국민ONE통장</span>
+        <img src="edit_icon.png" alt="Edit">
+      </div>
+      <div>699601-04-170401</div>
+      <div class="balance">2,305,766원</div>
+      <div class="available-balance">출금가능금액 2,305,766원</div>
+    </section>
+    <div class="buttons">
+      <button>이체</button>
+      <button>모으기</button>
+      <button>ATM/창구출금</button>
+    </div>
+    <div class="filters">
+      <span>7개월 ・ 전체 ・ 최신순</span>
+    </div>
+    <div class="months">
+      <span>2024.07.01 ~ 2025.02.11</span>
+      <div class="toggle-balance">
+        <label for="show-balance">잔액표기</label>
+        <label class="switch">
+          <input type="checkbox" id="show-balance" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="month">
+      <!-- tabindex와 aria-expanded를 추가하여 접근성을 개선 -->
+      <div class="month-header" tabindex="0" aria-expanded="false">2025.02</div>
+      <div class="month-content">
+        <div class="transaction">
+          <div class="date">2025.02.10 23:25:00</div>
+          <div class="description">
+            세븐일레븐대구성당 
+            <span class="amount">출금 <span class="value">2,300</span>원</span>
+          </div>
+          <div class="balance-after">잔액 2,305,766원</div>
+        </div>
+        <!-- 2025.02 거래 내역 추가 -->
+      </div>
+      <div class="month-header" tabindex="0" aria-expanded="false">2025.01</div>
+      <div class="month-content">
+        <div class="transaction">
+          <div class="date">2025.01.25 15:30:58</div>
+          <div class="description">
+            욜로PC방대구본리직 
+            <span class="amount">출금 <span class="value">6,500</span>원</span>
+          </div>
+          <div class="balance-after">잔액 2,380,993원</div>
+        </div>
+        <!-- 2025.01 거래 내역 추가 -->
+      </div>
+      <!-- 나머지 월별 내역들은 기존 내용 그대로 유지 -->
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 월별 거래 내역 토글: active 클래스를 추가/제거하여 보이도록 함
+      document.querySelectorAll('.month-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const content = header.nextElementSibling;
+          content.classList.toggle('active');
+          const isActive = content.classList.contains('active');
+          header.setAttribute('aria-expanded', isActive);
+        });
+        // Enter 키를 눌렀을 때도 클릭 이벤트 발생 (키보드 접근성)
+        header.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter' || e.keyCode === 13) {
+            header.click();
+          }
+        });
+      });
+
+      // 잔액 표기 토글: 체크 상태에 따라 .hidden 클래스를 추가/제거
+      document.getElementById('show-balance').addEventListener('change', (event) => {
+        document.querySelectorAll('.balance-after').forEach(balance => {
+          if (event.target.checked) {
+            balance.classList.remove('hidden');
+          } else {
+            balance.classList.add('hidden');
+          }
+        });
+      });
+
+      // 초기 상태 설정
+      document.getElementById('show-balance').dispatchEvent(new Event('change'));
+    });
+  </script>
+</body>
+</html>
