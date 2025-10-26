@@ -254,6 +254,129 @@
             <div class="month-header">2025.10</div>
             <div class="month-content">
                 <div class="transaction">
+                    <div class="date">2025.10.18 21:50:58</div>
+                    <div class="description">GS편의점           bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #b8860b;
+        }
+        input:checked + .slider:before {
+            transform: translateX(14px);
+        }
+        @media (max-width: 360px) {
+            .container {
+                border-radius: 0;
+            }
+            .header {
+                font-size: 12px;
+            }
+            .account-info .title, .account-info .balance, .account-info .available-balance {
+                font-size: 14px;
+            }
+            .buttons button {
+                font-size: 12px;
+            }
+            .transaction .description {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="back_icon.png" alt="Back">
+            <span class="title">거래내역조회</span>
+            <div class="icons">
+                <img src="home_icon.png" alt="Home">
+                <img src="menu_icon.png" alt="Menu">
+            </div>
+        </div>
+        <div class="account-info">
+            <div class="title">
+                <span>KB국민ONE통장</span>
+                <img src="edit_icon.png" alt="Edit">
+            </div>
+            <div>699601-04-170401</div>
+            <div class="balance">611,886원</div>
+            <div class="available-balance">출금가능금액 611,886원</div>
+        </div>
+        <div class="buttons">
+            <button>이체</button>
+            <button>모으기</button>
+            <button>ATM/창구출금</button>
+        </div>
+        <div class="filters">
+            <span>9개월 ・ 전체 ・ 최신순</span>
+        </div>
+        <div class="months">
+            <span>2024.07.01 ~ 2025.10.06</span>
+            <div class="toggle-balance">
+                <label for="show-balance">잔액표기</label>
+                <label class="switch">
+                    <input type="checkbox" id="show-balance" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="month">
+            <div class="month-header">2025.10</div>
+            <div class="month-content">
+                <div class="transaction deposit">
+                    <div class="date">2025.10.25 18:23:34</div>
+                    <div class="description">정영숙<span class="amount">입금 <span class="value">14,000</span>원</span></div>
+                    <div class="balance-after">잔액 498,576원</div>
+                </div>
+                <div class="transaction deposit">
+                    <div class="date">2025.10.25 18:22:10</div>
+                    <div class="description">정영숙<span class="amount">입금 <span class="value">14</span>원</span></div>
+                    <div class="balance-after">잔액 484,576원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2025.10.25 18:03:17</div>
+                    <div class="description">카카오선물)배달료<span class="amount">출금 <span class="value">3,000</span>원</span></div>
+                    <div class="balance-after">잔액 484,562원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2025.10.25 18:02:03</div>
+                    <div class="description">쿠팡이츠<span class="amount">출금 <span class="value">13,374</span>원</span></div>
+                    <div class="balance-after">잔액 487,562원</div>
+                </div>
+                <div class="transaction deposit">
+                    <div class="date">2025.10.25 17:33:21</div>
+                    <div class="description">정소영<span class="amount">입금 <span class="value">800</span>원</span></div>
+                    <div class="balance-after">잔액 500,936원</div>
+                </div>
+                <div class="transaction deposit">
+                    <div class="date">2025.10.25 17:17:47</div>
+                    <div class="description">정영숙<span class="amount">입금 <span class="value">63,000</span>원</span></div>
+                    <div class="balance-after">잔액 500,136원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2025.10.25 17:06:34</div>
+                    <div class="description">쿠팡<span class="amount">출금 <span class="value">52,800</span>원</span></div>
+                    <div class="balance-after">잔액 437,136원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2025.10.23 14:08:22</div>
+                    <div class="description">이마트24대구달서본<span class="amount">출금 <span class="value">6,300</span>원</span></div>
+                    <div class="balance-after">잔액 489,936원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2025.10.20 10:31:05</div>
+                    <div class="description">#KT통 10월-**54-4303<span class="amount">출금 <span class="value">52,800</span>원</span></div>
+                    <div class="balance-after">잔액 496,236원</div>
+                </div>
+                <div class="transaction">
+                    <div class="date">2025.10.18 21:50:58</div>
+                    <div class="description">GS25성당하늘채<span class="amount">출금 <span class="value">10,050</span>원</span></div>
+                    <div class="balance-after">잔액 549,036원</div>
+                </div>
+                <div class="transaction">
                     <div class="date">2025.10.05 15:50:03</div>
                     <div class="description">지에스더프레시(GSTH<span class="amount">출금 <span class="value">4,460</span>원</span></div>
                     <div class="balance-after">잔액 559,086원</div>
